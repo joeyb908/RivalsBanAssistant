@@ -4,7 +4,7 @@ import cv2
 import glob
 import os
 
-FILE_DIRECTORY = glob.glob('./screenshots/*') # * means all if need specific format then *.csv
+FILE_DIRECTORY = glob.glob('C:/Users/joeyb/OneDrive/Documents/ShareX/Screenshots/2025-02/*') # * means all if need specific format then *.csv
 IMAGE_PATH = max(FILE_DIRECTORY, key=os.path.getmtime)
 # reader = easyocr.Reader(['en'], download_enabled=False, model_storage_directory="./models")
 
