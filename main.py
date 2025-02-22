@@ -1,6 +1,6 @@
 import page_scraper
 import hero_stats
-from screenshot_reader import imToString
+from screenshot_reader import image_to_string
 
 MIN_BANLIST_SIZE = 10
 
@@ -34,7 +34,7 @@ def check_profiles(list_of_profiles):
 
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
-profile_names = imToString()
+profile_names = image_to_string()
 master_ban_list = []
 
 check_profiles(profile_names)
