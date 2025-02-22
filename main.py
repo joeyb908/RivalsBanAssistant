@@ -1,6 +1,6 @@
 import page_scraper
 import hero_stats
-from screenshot_reader import read_profile_names
+from screenshot_reader import read_profile_names_easyocr
 
 def check_profile(profile_name, ban_list):
     try:
@@ -32,7 +32,7 @@ def check_profiles(list_of_profiles):
 
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
-profile_names = read_profile_names()
+profile_names = read_profile_names_easyocr()
 # profile_names = input("Enter profile names separated by comma:\n")
 # profile_names = profile_names.split(',')
 master_ban_list = []
