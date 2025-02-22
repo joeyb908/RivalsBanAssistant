@@ -16,21 +16,21 @@ def check_profile(profile_name, ban_list):
         print(f"Unable to check {profile_name}'s profile...")
 
 def add_to_master(ban_list, hero_name, hero_winrate, hero_matches):
-    if len(ban_list) < 3:
+    if len(ban_list) < 10:
         ban_list.append([hero_name, hero_winrate, hero_matches])
 
     else:
         min_value = min(ban_list, key=lambda x: x[1])
         if hero_winrate > min_value[1]:
             min_index = ban_list.index(min_value)
-            ban_list[min_index] = [hero_name, hero_winrate]
+            ban_list[min_index] = [hero_name, hero_winrate, hero_matches]
 
-def check_profiles(list_of_profiles ):
+def check_profiles(list_of_profiles):
     for name in list_of_profiles:
         print(f"Checking {name}...")
         check_profile(name, master_ban_list)
 
-    master_ban_list.sort(key=lambda x: x[1], reverse=True)
+    master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
 profile_names = read_profile_names()
 # profile_names = input("Enter profile names separated by comma:\n")
@@ -48,6 +48,7 @@ if len(master_ban_list) == 0:
     print("No heroes with high enough winrate to consider banning")
 else:
     print(f"Top {len(master_ban_list)} heroes to ban")
+    print(master_ban_list)
     for i in range(len(master_ban_list)):
-          print(f"\t{round(master_ban_list[i][1])}%: {master_ban_list[i][0]} with {master_ban_list[i][2]} matches played")
+          print(f"\t{master_ban_list[i][0]}: {round(master_ban_list[i][1])}% with {master_ban_list[i][2]} matches played")
 
