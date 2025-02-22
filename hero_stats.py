@@ -19,8 +19,6 @@ class HeroStats:
         [hero_name, hero_winrate, hero_matches] = self.find_hero_winrate(index)
         if len(self.top_heroes) < 3:
             self.top_heroes.append([hero_name, hero_winrate, hero_matches])
-            print(self.top_heroes)
-
         else:
             min_value = min(self.top_heroes, key=lambda x: x[1])
             if hero_winrate > min_value[1]:
