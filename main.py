@@ -2,6 +2,8 @@ import page_scraper
 import hero_stats
 from screenshot_reader import imToString
 
+MIN_BANLIST_SIZE = 10
+
 def check_profile(profile_name, ban_list):
     try:
         scraper = page_scraper.Scraper(profile_name)
@@ -16,7 +18,7 @@ def check_profile(profile_name, ban_list):
         print(f"Unable to check {profile_name}'s profile...")
 
 def add_to_master(ban_list, hero_name, hero_winrate, hero_matches):
-    if len(ban_list) < 10:
+    if len(ban_list) < MIN_BANLIST_SIZE:
         ban_list.append([hero_name, hero_winrate, hero_matches])
 
     else:

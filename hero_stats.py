@@ -1,3 +1,5 @@
+MIN_WINRATE = 40
+MIN_MATCHES = 10
 
 class HeroStats:
     def __init__(self, heroes):
@@ -10,7 +12,7 @@ class HeroStats:
         hero_name = self.heroes[index]["metadata"]["name"]
         hero_winrate = float(self.heroes[index]["stats"]["matchesWinPct"]["value"])
 
-        if hero_matches < 10:
+        if hero_matches < MIN_MATCHES:
             return [hero_name, 1, 1]
 
         return [hero_name, hero_winrate, hero_matches]
@@ -30,5 +32,5 @@ class HeroStats:
             self.add_hero(i)
 
         for hero, winrate, matches in self.top_heroes:
-            if winrate > 59.9:
+            if winrate > MIN_WINRATE:
                 self.ban_heroes.append([hero, winrate, matches])
