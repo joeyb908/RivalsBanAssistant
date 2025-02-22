@@ -1,6 +1,6 @@
 import page_scraper
 import hero_stats
-from screenshot_reader import read_profile_names_easyocr
+from screenshot_reader import imToString
 
 def check_profile(profile_name, ban_list):
     try:
@@ -32,23 +32,15 @@ def check_profiles(list_of_profiles):
 
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
-profile_names = read_profile_names_easyocr()
-# profile_names = input("Enter profile names separated by comma:\n")
-# profile_names = profile_names.split(',')
+profile_names = imToString()
 master_ban_list = []
 
 check_profiles(profile_names)
-
-# for name in profile_names:
-#     check_profile(name, master_ban_list)
-#
-# master_ban_list.sort(key=lambda x: x[1], reverse=True)
 
 if len(master_ban_list) == 0:
     print("No heroes with high enough winrate to consider banning")
 else:
     print(f"Top {len(master_ban_list)} heroes to ban")
-    print(master_ban_list)
     for i in range(len(master_ban_list)):
           print(f"\t{master_ban_list[i][0]}: {round(master_ban_list[i][1])}% with {master_ban_list[i][2]} matches played")
 
