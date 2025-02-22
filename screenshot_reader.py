@@ -4,7 +4,7 @@ import os
 
 FILE_DIRECTORY = glob.glob('./screenshots/*') # * means all if need specific format then *.csv
 IMAGE_PATH = max(FILE_DIRECTORY, key=os.path.getmtime)
-reader = easyocr.Reader(['en'], download_enabled=False, model_storage_directory="./model")
+reader = easyocr.Reader(['en'], download_enabled=False, model_storage_directory="./models")
 
 #
 # # Defining paths to tesseract.exe

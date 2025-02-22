@@ -10,14 +10,14 @@ def check_profile(profile_name, ban_list):
         profile_hero_stats = hero_stats.HeroStats(heroes)
         profile_hero_stats.ban_calculator()
         for hero in profile_hero_stats.ban_heroes:
-            add_to_master(ban_list, hero[0], hero[1])
+            add_to_master(ban_list, hero[0], hero[1], hero[2])
         scraper.web_driver.driver.close()
     except KeyError:
         print(f"Unable to check {profile_name}'s profile...")
 
-def add_to_master(ban_list, hero_name, hero_winrate):
+def add_to_master(ban_list, hero_name, hero_winrate, hero_matches):
     if len(ban_list) < 3:
-        ban_list.append([hero_name, hero_winrate])
+        ban_list.append([hero_name, hero_winrate, hero_matches])
 
     else:
         min_value = min(ban_list, key=lambda x: x[1])
@@ -25,8 +25,8 @@ def add_to_master(ban_list, hero_name, hero_winrate):
             min_index = ban_list.index(min_value)
             ban_list[min_index] = [hero_name, hero_winrate]
 
-def check_profiles(profile_names):
-    for name in profile_names:
+def check_profiles(list_of_profiles ):
+    for name in list_of_profiles:
         print(f"Checking {name}...")
         check_profile(name, master_ban_list)
 
@@ -49,5 +49,5 @@ if len(master_ban_list) == 0:
 else:
     print(f"Top {len(master_ban_list)} heroes to ban")
     for i in range(len(master_ban_list)):
-          print(f"\t{round(master_ban_list[i][1])}%: {master_ban_list[i][0]}")
+          print(f"\t{round(master_ban_list[i][1])}%: {master_ban_list[i][0]} with {master_ban_list[i][2]} matches played")
 
