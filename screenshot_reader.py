@@ -38,6 +38,7 @@ def read_profile_names():
     for word in text:
         profile_name = word[1].split()
         if len(profile_name) > 1:
-            profile_names.append(profile_name[1])
+            if len(profile_name[1]) > 2:
+                profile_names.append(profile_name[1])
 
     return profile_names
