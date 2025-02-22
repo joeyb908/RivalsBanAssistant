@@ -1,37 +1,46 @@
-import easyocr
-import openocr
+import numpy as nm
+import pytesseract
+import cv2
 import glob
 import os
 
 FILE_DIRECTORY = glob.glob('./screenshots/*') # * means all if need specific format then *.csv
 IMAGE_PATH = max(FILE_DIRECTORY, key=os.path.getmtime)
-engine = openocr.OCR()
 # reader = easyocr.Reader(['en'], download_enabled=False, model_storage_directory="./models")
 
-#
-# # Defining paths to tesseract.exe
-# # and the image we would be using
-# path_to_tesseract = r'/usr/local/bin/tesseract'
-#
-# Opening the image & storing it in an image object
-# img = Image.open(IMAGE_PATH)
-#
-# # Providing the tesseract executable
-# # location to pytesseract library
-# # pytesseract.tesseract_cmd = path_to_tesseract
-#
-# # Passing the image object to image_to_string() function
-# # This function will extract the text from the image
-# text = pytesseract.image_to_string(img)
+def imToString():
+    names = []
+    # Path of tesseract executable
+    pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
+    # ImageGrab-To capture the screen image in a loop.
+    # Bbox used to capture a specific area.
+    cap = cv2.imread(IMAGE_PATH)
+    gray = cv2.cvtColor(nm.array(cap), cv2.COLOR_BGR2GRAY)
 
-# Displaying the extracted text
+    # Converted the image to monochrome for it to be easily
+    # read by the OCR and obtained the output String.
+    text = pytesseract.image_to_string(gray, lang='eng')
+    # print(text)
+    for words in text.splitlines():
+        # print(words)
+        if len(words) < 4:
+            continue
+        words = words[3:]
+        words = words.replace('\\', '')
+        if words[0] == ' ':
+            words = words[1:]
+        if len(words) > 3:
+            # print(words)
+            names.append(words)
 
-# for word in text.split():
-#     try:
-#         val = int(word)
-#     except ValueError:
-#         profile_name = word
-#         print(profile_name)
+    return names
+
+    # tesstr = pytesseract.image_to_string(
+    #     cv2.cvtColor(nm.array(cap), cv2.COLOR_BGR2GRAY),
+    #     lang='eng')
+
+    # Calling the function
+
 
 # def read_profile_names_easyocr():
 #     text = reader.readtext(IMAGE_PATH)
@@ -60,7 +69,3 @@ engine = openocr.OCR()
 #                     profile_names.append(name)
 #
 #     return profile_names
-
-def read_profile_names_openocr():
-    result, elapse = engine(IMAGE_PATH)
-    print(result)
