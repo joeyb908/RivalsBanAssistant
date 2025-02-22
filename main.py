@@ -1,5 +1,6 @@
 import page_scraper
 import hero_stats
+from screenshot_reader import read_profile_names
 
 def check_profile(profile_name, ban_list):
     try:
@@ -12,7 +13,7 @@ def check_profile(profile_name, ban_list):
             add_to_master(ban_list, hero[0], hero[1])
         scraper.web_driver.driver.close()
     except KeyError:
-        print(f"{profile_name} has a private profile")
+        print(f"Unable to check {profile_name}'s profile...")
 
 def add_to_master(ban_list, hero_name, hero_winrate):
     if len(ban_list) < 3:
@@ -26,12 +27,14 @@ def add_to_master(ban_list, hero_name, hero_winrate):
 
 def check_profiles(profile_names):
     for name in profile_names:
+        print(f"Checking {name}...")
         check_profile(name, master_ban_list)
 
     master_ban_list.sort(key=lambda x: x[1], reverse=True)
 
-profile_names = input("Enter profile names separated by comma:\n")
-profile_names = profile_names.split(',')
+profile_names = read_profile_names()
+# profile_names = input("Enter profile names separated by comma:\n")
+# profile_names = profile_names.split(',')
 master_ban_list = []
 
 check_profiles(profile_names)
