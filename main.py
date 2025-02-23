@@ -70,4 +70,4 @@ else:
 
 end = time.time()
 
-print(f"\nTotal time: {end - start} seconds")
+print(f"\nTotal time: {end - start:.2f} seconds")
