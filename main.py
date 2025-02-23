@@ -38,15 +38,15 @@ def add_to_master(ban_list, hero_name, hero_winrate, hero_matches, profile_name)
             ban_list[min_index] = [hero_name, hero_winrate, hero_matches, profile_name]
 
 def check_profiles(list_of_profiles):
-    a = {}
-    k = 0
-    for name in list_of_profiles:
-        a[k] = threading.Thread(target=check_profile, args=(name, master_ban_list))
-        a[k].start()
-        k += 1
+    a = {k: threading.Thread(target=check_profile, args=(name, master_ban_list)) for k, name in
+         enumerate(list_of_profiles)}
 
-    for i in range(len(list_of_profiles)):
-        a[i].join()
+    # Start all threads
+    for thread in a.values():
+        thread.start()
+
+    for thread in a.values():
+        thread.join()
 
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
