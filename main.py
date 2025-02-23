@@ -16,8 +16,8 @@ start = time.time()
 
 def check_profile(profile_name, ban_list):
     try:
-        scraper = page_scraper.TrackerPageScraper(profile_name)
-        data = scraper.web_driver.data
+        scraper = page_scraper.PageScraper()
+        data = scraper.scrape_page(profile_name)
         heroes = data[2:len(data) - 3]
         profile_hero_stats = hero_stats.HeroStats(heroes)
         profile_hero_stats.ban_calculator()
