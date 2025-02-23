@@ -13,16 +13,12 @@ def image_to_string():
     # Path of tesseract executable
     pytesseract.pytesseract.tesseract_cmd = os.environ["TESSERACT_EXE"]
 
-    # Capture image
-    # Convert the image to monochrome for it to be easily
-    # read by the OCR and obtained the output String.
+    # Capture, convert to monochrome, and read OCR
     cap = imread(IMAGE_PATH)
     gray = cvtColor(array(cap), COLOR_BGR2GRAY)
     text = pytesseract.image_to_string(gray, lang='eng')
 
-    # Parse through text anda
-    for words in text.splitlines():
-        if len(words) > 0:
-            names.append(words)
+    # Parse through text and assign list if characters exist
+    names = [words for words in text.splitlines() if words]
 
     return names
