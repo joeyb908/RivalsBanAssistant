@@ -4,10 +4,12 @@ from screenshot_reader import image_to_string
 import threading
 import time
 from prettytable import PrettyTable
+from mapped_names import hero_name_map
 
 MIN_BANLIST_SIZE = 10
 table = PrettyTable()
 table.field_names = ["Hero", "Winrate", "Games Played", "Player"]
+master_ban_list = []
 
 # Record the start time
 start = time.time()
@@ -49,15 +51,17 @@ def check_profiles(list_of_profiles):
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
 profile_names = image_to_string()
-master_ban_list = []
 
 check_profiles(profile_names)
 if len(master_ban_list) == 0:
     print("No heroes with high enough winrate to consider banning")
 else:
+    # Convert names in ban_list to mapped names
+    master_ban_list = [[hero_name_map.get(hero, hero)] + rest for hero, *rest in master_ban_list]
+
     print(f"Top {len(master_ban_list)} heroes to ban:")
     for i in range(len(master_ban_list)):
-        hero = master_ban_list[i][0][:6]
+        hero = master_ban_list[i][0]
         winrate = f"{round(master_ban_list[i][1])}%"
         games_played = master_ban_list[i][2]
         player = master_ban_list[i][3]
