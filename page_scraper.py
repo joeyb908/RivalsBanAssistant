@@ -1,6 +1,6 @@
-from web_driver import TrackerAPILoader
+from web_driver import TrackerAPIReader
 
 
 class TrackerPageScraper:
     def __init__(self, profile):
-        self.web_driver = TrackerAPILoader(profile)
+        self.web_driver = TrackerAPIReader(profile)
