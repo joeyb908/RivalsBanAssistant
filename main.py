@@ -3,8 +3,11 @@ import hero_stats
 from screenshot_reader import image_to_string
 import threading
 import time
+from prettytable import PrettyTable
 
 MIN_BANLIST_SIZE = 10
+table = PrettyTable()
+table.field_names = ["Hero", "Winrate", "Games Played", "Player"]
 
 # Record the start time
 start = time.time()
@@ -42,7 +45,6 @@ def check_profiles(list_of_profiles):
 
     for i in range(len(list_of_profiles)):
         a[i].join()
-        print(f"Finished {list_of_profiles[i]}")
 
     master_ban_list.sort(key=lambda x: x[2], reverse=True)
 
@@ -55,7 +57,12 @@ if len(master_ban_list) == 0:
 else:
     print(f"Top {len(master_ban_list)} heroes to ban:")
     for i in range(len(master_ban_list)):
-          print(f"\t{master_ban_list[i][0]}: {round(master_ban_list[i][1])}% with {master_ban_list[i][2]} matches played by {master_ban_list[i][3]}")
+        hero = master_ban_list[i][0][:6]
+        winrate = f"{round(master_ban_list[i][1])}%"
+        games_played = master_ban_list[i][2]
+        player = master_ban_list[i][3]
+        table.add_row([hero, winrate, games_played, player])
+    print(table)
 
 end = time.time()
 
