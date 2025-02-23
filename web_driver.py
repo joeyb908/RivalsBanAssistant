@@ -1,10 +1,8 @@
-from json import loads
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium_stealth import stealth
 
-class TrackerAPIReader:
-    def __init__(self, profile):
+class WebDriver:
+    def __init__(self):
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--headless")
         self.options.add_argument("--no-sandbox")
@@ -19,6 +17,3 @@ class TrackerAPIReader:
                 renderer="Intel Iris OpenGL Engine",
                 fix_hairline=True,
         )
-        self.driver.get(f"https://api.tracker.gg/api/v2/marvel-rivals/standard/profile/ign/{profile}/segments/career?mode=competitive&season=2")
-        self.json_data = loads(self.driver.find_element(By.TAG_NAME, "body").text)
-        self.data = self.json_data["data"]
