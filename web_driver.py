@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium_stealth import stealth
 
-class RivalsAPIReader:
+class TrackerAPIReader:
     def __init__(self, profile):
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--headless")
