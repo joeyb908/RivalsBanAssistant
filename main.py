@@ -6,7 +6,7 @@ MIN_BANLIST_SIZE = 10
 
 def check_profile(profile_name, ban_list):
     try:
-        scraper = page_scraper.Scraper(profile_name)
+        scraper = page_scraper.TrackerPageScraper(profile_name)
         data = scraper.web_driver.data
         heroes = data[2:len(data) - 3]
         profile_hero_stats = hero_stats.HeroStats(heroes)
@@ -45,4 +45,3 @@ else:
     print(f"Top {len(master_ban_list)} heroes to ban:")
     for i in range(len(master_ban_list)):
           print(f"\t{master_ban_list[i][0]}: {round(master_ban_list[i][1])}% with {master_ban_list[i][2]} matches played by {master_ban_list[i][3]}")
-
