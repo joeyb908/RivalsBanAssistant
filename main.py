@@ -70,4 +70,4 @@ else:
 
 end = time.time()
 
-print(f"\nTotal time: {end - start:.2f} seconds")
+print(f"\nTotal time: {round(end - start, 2)} seconds")
