@@ -11,4 +11,5 @@ class PageScraper:
             f"https://api.tracker.gg/api/v2/marvel-rivals/standard/profile/ign/{profile}/segments/career?mode=competitive&season=2")
         json_data = loads(self.web_driver.driver.find_element(By.TAG_NAME, "body").text)
         data = json_data["data"]
-        return data
+        heroes = data[2:len(data) - 3]
+        return heroes
