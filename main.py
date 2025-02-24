@@ -15,17 +15,19 @@ master_ban_list = []
 start = time.time()
 
 def check_profile(profile_name, ban_list):
+    scraper = page_scraper.PageScraper()
+
     try:
-        scraper = page_scraper.PageScraper()
-        data = scraper.scrape_page(profile_name)
-        heroes = data[2:len(data) - 3]
+        heroes = scraper.scrape_page(profile_name)
+    except KeyError:
+        print(f"Unable to check {profile_name}'s profile...")
+    else:
         profile_hero_stats = hero_stats.HeroStats(heroes)
         profile_hero_stats.ban_calculator()
         for hero in profile_hero_stats.ban_heroes:
             add_to_master(ban_list, hero[0], hero[1], hero[2], profile_name)
+    finally:
         scraper.web_driver.driver.close()
-    except KeyError:
-        print(f"Unable to check {profile_name}'s profile...")
 
 def add_to_master(ban_list, hero_name, hero_winrate, hero_matches, profile_name):
     if len(ban_list) < MIN_BANLIST_SIZE:
